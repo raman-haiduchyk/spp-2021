@@ -6,35 +6,35 @@
   </head> 
   <body>
 
-    <header><%- include("partials/header.ejs")%></header>
+    <%- include("partials/header.ejs")%>
 
     <main>
       <div class="cards">
         <% jobs.forEach(job => {%>
-          <div class='job-card'>
+          <a href="/<%= job.id %>">
+            <div class='job-card'>
 
-            <div class="job-header">
-              <div class="job-main-info">
-                <h3><%= job.name %></h3>
-                <p><%= job.company.name %></p>
+              <div class="job-header">
+                <div class="job-main-info">
+                  <h3><%= job.name %></h3>
+                  <p><%= job.company.name %></p>
+                </div>
+                <p><%= job.createdAt.toDateString() %></p>
               </div>
-              <p><%= job.createdAt.toDateString() %></p>
+  
+              <div class="job-footer">
+                <h4><%= job.specialization %></h3>
+                <h4><%= job.salary %>$</h3>
+              </div>
+              
             </div>
-
-            <div class="job-footer">
-              <h4><%= job.specialization %></h3>
-              <h4><%= job.salary %>$</h3>
-            </div>
-            
-          </div>
-
-          
+          </a>
         <% }); %>
       </div>
       
     </main>
 
-    <footer><%- include("partials/footer.ejs")%></footer>
+    <%- include("partials/footer.ejs")%>
 
   </body>
 </html>

@@ -1,7 +1,11 @@
 const createError = require('http-errors');
-const express = require('express');
+const express = require('express')
+;
 const path = require('path');
 const logger = require('morgan');
+
+const cookieParser = require('cookie-parser');
+const session = require('cookie-session');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -16,6 +20,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
+app.use(session({
+  secret: 'secret_key'
+}));
 
 
 app.use('/', indexRouter);
