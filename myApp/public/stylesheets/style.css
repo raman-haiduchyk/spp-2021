@@ -22,6 +22,9 @@ main {
   height: 85%;
   margin: 5px 0 5px 0;
   overflow: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 footer {
@@ -83,4 +86,31 @@ a {
 
 .job-footer > h4 {
   margin: 0;
+}
+
+.job-info {
+  padding: 30px;
+  width: 800px;
+  background-color: aliceblue;
+  -webkit-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.5);
+}
+
+.job-info > h1 {
+  text-align: center;
+}
+
+.job-info > h2 {
+  text-align: center;
+}
+
+.job-info > p {
+  text-align: center;
+}
+
+.main-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }

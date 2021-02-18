@@ -19,7 +19,7 @@ router.get('/:id', async(req, res, next) => {
  
     await Job.findByPk(parseInt(req.params.id), {include: Company})
       .then(job=>{
-        res.render('index', { jobs: [job] });
+        res.render('item', { job: job });
       })    
       .catch(err => {
 
