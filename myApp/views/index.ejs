@@ -9,6 +9,17 @@
     <%- include("partials/header.ejs")%>
 
     <main>
+      <form method="post">
+        <h3>Filters</h3>
+        <input type="checkbox" name="specialization" value="driver">Driver<br>
+        <input type="checkbox" name="specialization" value="programmer">Programmer<br>
+        <input type="checkbox" name="specialization" value="doctor">Doctor<br>
+        <input type="checkbox" name="specialization" value="teacher">Teacher<br><br>
+        Minimal salary:<br>
+        <input id="min-salary" type="range" name='minimum' value=300 min='300' max='1500'><br>
+        <span id="min-salary-value"></span><br><br>
+        <input type="submit" value="Send">
+      </form>
       <div class="cards">
         <% jobs.forEach(job => {%>
           <a href="/<%= job.id %>">
@@ -37,4 +48,5 @@
     <%- include("partials/footer.ejs")%>
 
   </body>
+  <script src="/javascripts/range.js"></script>
 </html>
