@@ -26,9 +26,27 @@ app.use(session({
   secret: 'secret_key'
 }));
 
+function checkUnauthorized(req, res, next) {
+  if (req.session.companyId) {
+    next();
+  } else {
+    res.redirect('/authorization');
+  }
+}
 
-app.use('/profile', profileRouter);
-app.use('/authorization', authRouter);
+function checkAuthorized(req, res, next) {
+  console.log(req.url);
+  if (req.session.companyId && req.url !== '/logout') {
+    res.redirect('/');
+  } else {
+    next();
+  }
+}
+
+
+
+app.use('/profile', checkUnauthorized, profileRouter);
+app.use('/authorization', checkAuthorized, authRouter);
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler

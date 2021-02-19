@@ -12,7 +12,7 @@ router.get('/', async(req, res, next) => {
       companyId: req.session.companyId
     }})
     .then(jobs => {
-      res.render('profile', { jobs: jobs, company: company });
+      res.render('profile', { jobs: jobs, company: company, authorized: req.session.companyId });
     })
     .catch(err => {
 

@@ -1,1 +1,13 @@
-<header>FindJob</header>
+<header>
+    <h1>FindJob</h1>
+    <div class="nav">
+        <a class="login" href="/">Main</a>
+        <% if(authorized){ %>
+            <a class="login" href="/profile">Profile</a>
+            <a class="login" href="/authorization/logout">Logout</a>
+        <% } else { %>
+            <a class="login" href="/authorization">Login</a>
+        <%}%>
+    </div>
+</header>
+    
