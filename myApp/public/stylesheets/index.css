@@ -1,0 +1,11 @@
+.filters {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 20px;
+  }
+  
+  .cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }

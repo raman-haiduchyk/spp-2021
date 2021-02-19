@@ -10,7 +10,7 @@ router.get('/', async(req, res, next) => {
         res.render('index', { jobs: jobs, authorized: req.session.companyId });
       })
       .catch(err => {
-
+        console.log(err)
       });
 });
 
@@ -35,7 +35,7 @@ router.post('/', async(req, res, next) => {
       res.render('index', { jobs: jobs, authorized: req.session.companyId });
     })
     .catch(err => {
-
+      console.log(err)
     });
 });
 
@@ -47,7 +47,7 @@ router.get('/:id', async(req, res, next) => {
         res.render('item', { job: job, authorized: req.session.companyId });
       })    
       .catch(err => {
-
+        console.log(err)
       });
 });
 

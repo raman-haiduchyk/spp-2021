@@ -26,7 +26,7 @@ router.post('/', async(req, res) => {
             res.redirect('/profile');
         })
         .catch(err => {
-
+            console.log(err)
         });
         
     } else {
@@ -39,7 +39,7 @@ router.post('/', async(req, res) => {
             res.redirect('/profile');
         })
         .catch(err => {
-
+            console.log(err)
         });
     }
 });

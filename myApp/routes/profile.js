@@ -15,7 +15,7 @@ router.get('/', async(req, res, next) => {
       res.render('profile', { jobs: jobs, company: company, authorized: req.session.companyId });
     })
     .catch(err => {
-
+      console.log(err)
     });
 });
 
@@ -33,7 +33,7 @@ router.post('/', async(req, res, next) => {
     res.redirect('/profile');
   })
   .catch(err => {
-
+    console.log(err)
   });
 });
 
@@ -47,7 +47,7 @@ router.post('/:id', async(req, res, next) => {
     res.redirect('/profile');
   })
   .catch(err => {
-
+    console.log(err)
   });
 });
 
