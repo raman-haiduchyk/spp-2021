@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FindJob</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head> 
+  <body>
+
+    <%- include("partials/header.ejs")%>
+
+    <main>
+      <br>
+      <div class="authorization">
+        <form method="post" class="spec-form">
+            <h3>Login as Company</h3>
+            email:<br>
+            <input type="email" name="email" required><br>
+            Password:<br>
+            <input type="text" name="password" required><br>
+            <input type="submit" value="Send">
+        </form>
+
+        <form method="post" class="spec-form">
+            <h3>Register as Company</h3>
+            email:<br>
+            <input type="email" name="email" required><br>
+            Name:<br>
+            <input type="text" name="name" required><br>
+            Phone:<br>
+            <input type="text" name="phone" required><br>
+            Description:<br>
+            <input type="text" name="description"><br>
+            Password:<br>
+            <input type="text" name="password" required><br>
+            <input type="submit" value="Send">
+        </form>
+        
+      </div>
+      <br>
+    </main>
+
+    <%- include("partials/footer.ejs")%>
+
+  </body>
+</html>

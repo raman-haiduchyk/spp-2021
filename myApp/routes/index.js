@@ -1,10 +1,8 @@
 const express = require('express');
 const Job = require('../models/db-models').Job;
 const Company = require('../models/db-models').Company;
-const { Op, where } = require("sequelize");
+const { Op } = require("sequelize");
 const router = express.Router();
-
-const parser = express.urlencoded({ extended: false })
 
 router.get('/', async(req, res, next) => {
     await Job.findAll({ include: Company })
@@ -17,7 +15,7 @@ router.get('/', async(req, res, next) => {
 });
 
 
-router.post('/', parser, async(req, res, next) => {
+router.post('/', async(req, res, next) => {
 
   console.log(req.body)
   whereParam = req.body?.specialization 
