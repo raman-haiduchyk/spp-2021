@@ -1,6 +1,6 @@
 const createError = require('http-errors');
-const express = require('express')
-;
+const express = require('express');
+const favicon = require('serve-favicon')
 const path = require('path');
 const logger = require('morgan');
 
@@ -35,7 +35,6 @@ function checkUnauthorized(req, res, next) {
 }
 
 function checkAuthorized(req, res, next) {
-  console.log(req.url);
   if (req.session.companyId && req.url !== '/logout') {
     res.redirect('/');
   } else {
@@ -43,8 +42,18 @@ function checkAuthorized(req, res, next) {
   }
 }
 
+function ignoreFavicon(req, res, next) {
+  if (req.url.split('/').pop().includes('favicon')) {
+    res.status(204).end();
+  } else {
+    next();
+  }
+}
 
+//ignore request for favicon
+app.use(ignoreFavicon);
 
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use('/profile', checkUnauthorized, profileRouter);
 app.use('/authorization', checkAuthorized, authRouter);
 app.use('/', indexRouter);

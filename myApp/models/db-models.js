@@ -67,6 +67,15 @@ const Company = sequelize.define("company", {
         allowNull: true
     },
 });
+/*
+const User = sequelize.define("user", {
+    id: {
+
+    },
+    name: {
+
+    },
+})*/
 
 Company.hasMany(Job, { onDelete: "cascade" });
 Job.belongsTo(Company);
