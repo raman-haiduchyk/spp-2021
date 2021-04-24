@@ -1,0 +1,23 @@
+<h2>Comments:</h2>
+<div fxLayout="row" fxLayoutGap="20px" class="field">
+  <mat-form-field class="input" appearance="outline" *ngIf="isAuthorized">
+    <mat-label>Write a comment</mat-label>
+    <input matInput [formControl]="commentCtrl">
+  </mat-form-field>
+  <button mat-fab (click)="sendComment()" [disabled]="commentCtrl.invalid"><mat-icon>send</mat-icon></button>
+</div>
+
+<div class="comments" fxLayout="column" fxLayoutGap="10px">
+  <div *ngFor="let comment of comments" class="comment">
+    <mat-card-header fxLayout="row" fxLayoutGap="5px">
+      <img mat-card-avatar src='https://material.angular.io/assets/img/examples/shiba1.jpg'>
+      <img *ngIf="comment.avatar" mat-card-avatar src="{{comment.avatar}}">
+      <div fxLayout="column">
+        <p class="author">{{comment.author}}</p>
+        <p class="text"> {{comment.text}} </p>
+        <span class="date"> {{comment.createdAt | date : 'shortDate'}}</span>
+      </div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+  </div>
+</div>

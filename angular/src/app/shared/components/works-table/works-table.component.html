@@ -1,0 +1,62 @@
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput #input (keyup)="applyFilter($event)">
+</mat-form-field>
+
+<div class="tab">
+
+  <table mat-table [dataSource]="funfics" matSort>
+
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="genre">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Genre </th>
+      <td mat-cell *matCellDef="let row"> {{row.genre}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Created </th>
+      <td mat-cell *matCellDef="let row"> {{row.createdAt | date : 'shortDate'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="rating">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Rating </th>
+      <td mat-cell *matCellDef="let row"> {{row.rating}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="scoreCount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Rate count </th>
+      <td mat-cell *matCellDef="let row"> {{row.scoreCount}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="chaptersCount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Chapters </th>
+      <td mat-cell *matCellDef="let row"> {{row.chaptersCount}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="read">
+      <th mat-header-cell *matHeaderCellDef > Read  </th>
+      <td mat-cell *matCellDef="let row"> <button mat-icon-button (click)="readFunfic(row.id)"><mat-icon>chrome_reader_mode</mat-icon></button> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef > Delete </th>
+      <td mat-cell *matCellDef="let row"> <button mat-icon-button (click)="deleteFunfic(row.id, row.name)"><mat-icon>delete</mat-icon></button> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef > Edit </th>
+      <td mat-cell *matCellDef="let row"> <button mat-icon-button (click)="editFunfic(row.id)"><mat-icon>edit</mat-icon></button> </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" ></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[10]"></mat-paginator>
+</div>

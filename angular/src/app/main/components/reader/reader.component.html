@@ -1,0 +1,49 @@
+<mat-sidenav-container class="nav-container mat-elevation-z2">
+
+  <mat-sidenav #sidenav [mode]="mode" [opened]="opened" fxLayout="column">
+    <mat-nav-list class="list" *ngIf="funfic && funfic.chapters" >
+      <button mat-icon-button (click)="sidenav.toggle()" fxHide.gt-xs><mat-icon>close</mat-icon></button>
+      <h2>Chapters:</h2>
+      <a mat-list-item *ngFor="let chap of funfic.chapters; let i = index" (click)="setChapter(i)">{{chap.name}}
+        <mat-divider></mat-divider>
+      </a>
+    </mat-nav-list>
+    <button mat-stroked-button class="edit-button" *ngIf="isOwner" (click)="editFunfic(funfic.id)">Edit Funfic</button>
+  </mat-sidenav>
+
+
+  <mat-sidenav-content class="content" fxLayout="column" fxLayoutAlign="auto center">
+    <mat-spinner *ngIf="!(funfic && funfic.chapters)"></mat-spinner>
+    <div class="info" *ngIf="(funfic && funfic.chapters)" fxLayout="column" fxLayoutAlign="center center">
+      <button class="toggle-button" mat-stroked-button (click)="sidenav.toggle()" fxHide.gt-xs>Chapters</button>
+      <h1>{{funfic.name}}</h1>
+      <h3>{{funfic.author}}</h3>
+      <div class="ratings" fxLayout="column" fxLayoutAlign="center end">
+        <star-rating
+          [matTooltip]= "funfic.scoreCount+' scores : '+funfic.rating"
+          [matTooltipPosition]="'above'"
+          [labelText]="'Users score'"
+          [starType]="'svg'"
+          [rating]="funfic.rating"
+          [showHalfStars]="true"
+          [readOnly]="true"
+        ></star-rating>
+        <star-rating
+          *ngIf="isAuthorized"
+          [labelText]="'Your score'"
+          [starType]="'svg'"
+          [rating]="rating"
+          [showHalfStars]="true"
+          [hoverEnabled]="true"
+          [disabled]="isRatingUpdating"
+          (starClickChange)="onRatingChange($event)"
+        ></star-rating>
+      </div>
+
+      <app-chapter [chapter]="funfic.chapters[currentChapter]" fxFlexAlign="start"></app-chapter>
+      <mat-divider></mat-divider>
+      <app-comments [isAuthorized]="isAuthorized" [funficId]="funfic.id"></app-comments>
+    </div>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

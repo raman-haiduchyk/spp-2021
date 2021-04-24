@@ -1,0 +1,17 @@
+table, mat-form-field {
+  width: 95%;
+  margin: 0 2%;
+}
+
+.tab{
+  border: 1px solid black;
+}
+
+div {
+  width: 100%;
+  overflow: auto;
+}
+
+:host ::ng-deep.mat-paginator .mat-paginator-container{
+  justify-content: flex-start;
+}

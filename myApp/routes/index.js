@@ -1,74 +1,26 @@
 const express = require('express');
-const Job = require('../models/db-models').Job;
-const Company = require('../models/db-models').Company;
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
+const Funfic = require('../models/initModels').Funfic;
+const Chapter = require('../models/initModels').Chapter;
 const router = express.Router();
 
-router.get('/', async(req, res, next) => {
-    await Job.findAll({ include: Company })
-      .then(jobs=>{
-        jobs.forEach(element => {
-          let vacancy = {
-            id: element.id,
-            name: element.name,
-            salary: element.salary,
-            requirments: element.requirments,
-            responsibilities: element.responsibilities,
-            offers: element.offers,
-            specialization: element.specialization,
-            createdAt: element.createdAt,
-            company: {
-              id: element.companyId,
-              name: element.company.name,
-              phone: element.company.phone,
-              email: element.company.email,
-              home_page: element.company.home_page,
-              description: element.company.description
-            }
-          }
-          console.log(vacancy)
-        });
-        res.render('index', { jobs: jobs, authorized: req.session.companyId });
-      })
-      .catch(err => {
-        console.log(err)
-      });
+router.get('/', async(req, res) => {
+    const funfics = await Funfic.findAll();
+    if (!funfics) return res.send([]);
+    return res.status(200).send(funfics);
 });
 
-
-router.post('/', async(req, res, next) => {
-
-  console.log(req.body)
-  whereParam = req.body?.specialization 
-    ?{ 
-      specialization: {[Op.or] : [req.body.specialization]}, 
-      salary: {[Op.gt] : parseInt(req.body.minimum)}
-    }
-    :{
-      salary: {[Op.gt] : parseInt(req.body.minimum)}
-    }
-
-  await Job.findAll({ 
-    include: Company, 
-    where: whereParam
-  })
-    .then(jobs=>{
-      res.render('index', { jobs: jobs, authorized: req.session.companyId });
-    })
-    .catch(err => {
-      console.log(err)
+router.get('/:id', async(req, res) => {
+    let id = Number(req.params["id"]);
+    if (isNaN(id)) return res.sendStatus(400);
+    let funfic = await Funfic.findByPk(id);
+    if (!funfic) return res.sendStatus(404);
+    const chapters = await Chapter.findAll({
+        where: {funficId: funfic.id}
     });
-});
-
-
-router.get('/:id', async(req, res, next) => {
-    await Job.findByPk(parseInt(req.params.id), {include: Company})
-      .then(job=>{
-        res.render('item', { job: job, authorized: req.session.companyId });
-      })    
-      .catch(err => {
-        console.log(err)
-      });
+    if (!chapters) funfic.dataValues.chapters = []
+    else funfic.dataValues.chapters = chapters;
+    return res.status(200).send(funfic.dataValues);  
 });
 
 module.exports = router;

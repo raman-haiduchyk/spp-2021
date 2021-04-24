@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+mat-card {
+  max-width: 300px;
+  min-width: 250px;
+}
+
+.extern-login {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+}
+
+.alert-danger {
+  border-radius: 3px;
+  background-color: pink;
+}

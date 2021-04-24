@@ -1,0 +1,63 @@
+
+  <div class="spiner" *ngIf="!(funfic && funfic.chapters)" fxLayout="column" fxLayoutAlign="center center">
+    <mat-spinner></mat-spinner>
+  </div>
+
+<mat-sidenav-container class="nav-container mat-elevation-z2">
+
+  <mat-sidenav #sidenav [mode]="mode" [opened]="opened">
+
+    <button mat-icon-button (click)="sidenav.toggle()" fxHide.gt-xs><mat-icon>close</mat-icon></button>
+
+    <div class="chap-list" fxLayout="column" *ngIf="funfic && funfic.chapters">
+
+      <h2>Chapters:</h2>
+
+      <div cdkDropList class="list" (cdkDropListDropped)="drop($event)" fxLayout="column">
+        <div matRipple class="chapter" *ngFor="let chapter of funfic.chapters; let i = index"
+          cdkDrag
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          (click)="changeChapter(i)">
+
+          <span>{{i+1}}.</span>
+          <mat-form-field>
+            <input matInput type="text" [(ngModel)]="chapter.name" required>
+          </mat-form-field>
+          <div class="move-handle handle" cdkDragHandle>
+            <mat-icon>
+              open_with
+            </mat-icon>
+          </div>
+          <div (click)="deleteCahpter(i)" class="delete-handle handle"><mat-icon>delete</mat-icon></div>
+        </div>
+        <button mat-button (click)="addChapter()"><mat-icon>add</mat-icon></button>
+      </div>
+
+      <mat-form-field class="input-field" appearance="outline">
+        <mat-label>Genre</mat-label>
+        <input matInput type="text" [(ngModel)]="funfic.genre">
+      </mat-form-field>
+
+      <mat-form-field class="input-field description" appearance="outline">
+        <mat-label>Short Description</mat-label>
+        <textarea matInput type="text" [(ngModel)]="funfic.shortDescription"></textarea>
+      </mat-form-field>
+
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content" fxLayout="column" fxLayoutAlign="center center">
+    <div class="editor" fxLayout="column" fxLayoutAlign="start center" *ngIf="funfic && funfic.chapters">
+      <button mat-stroked-button (click)="sidenav.toggle()" class="toggle-button" fxHide.gt-xs>Chapters and tags</button>
+      <mat-form-field class="input-field headline" appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" [(ngModel)]="funfic.name" required autocomplete="off">
+      </mat-form-field>
+      <quill-editor *ngIf="currentChapterNumber !== null" [(ngModel)]="funfic.chapters[currentChapterNumber].text" [preserveWhitespace]="true"></quill-editor>
+    </div>
+    <button mat-stroked-button *ngIf="funfic && funfic.chapters" (click)="saveChanges()" [disabled]="checkFormControlsInvalid() || isLoading">Save Changes</button>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+

@@ -1,0 +1,22 @@
+:host {
+  width: 100%;
+  max-width: 1000px;
+}
+
+img {
+  background-size: cover;
+}
+
+
+.add-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size:larger;
+}
+
+::ng-deep.mat-card:not([class*=mat-elevation-z]){
+  box-shadow: none;
+  border: 1px solid rgba($color: #757575, $alpha: 0.4);
+}

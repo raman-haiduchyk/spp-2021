@@ -1,0 +1,33 @@
+<mat-sidenav-container class="nav-container mat-elevation-z2">
+  <mat-sidenav #sidenav [mode]="mode" [opened]="opened">
+    <button mat-icon-button (click)="sidenav.toggle()" fxHide.gt-xs><mat-icon>close</mat-icon></button>
+    <h2>Filters</h2>
+    <app-filter-block></app-filter-block>
+  </mat-sidenav>
+
+  <div class="spiner" *ngIf="!funfics" fxLayout="column" fxLayoutAlign="center center">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <mat-sidenav-content
+    *ngIf="funfics | filter : dateFilterState : scoreFilterState : viewsFilterState : wordFilterState as filteredFunfics"
+    class="content" fxLayout="column" fxLayoutAlign="auto center" fxLayoutGap="10px">
+
+    <button class="toggle-button" mat-stroked-button (click)="sidenav.toggle()" fxHide.gt-xs>Filters</button>
+
+    <app-funfic-card *ngFor="let funfic of filteredFunfics | slice : pageIndex * pageSize : (pageIndex + 1) * pageSize"
+      [funficInfo]="funfic"
+      [itemId]="funfic.id" >
+    </app-funfic-card>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 15, 20]"
+      [pageIndex]="pageIndex"
+      (page)="onPage($event)"
+      [length]="filteredFunfics.length">
+    </mat-paginator>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+

@@ -1,0 +1,26 @@
+<mat-card>
+    <mat-card-title>{{funficInfo.name}}</mat-card-title>
+    <mat-card-subtitle>{{funficInfo.author}}</mat-card-subtitle>
+
+    <mat-card-content>
+      {{funficInfo.shortDescription}}
+    </mat-card-content>
+
+  <mat-card-content fxLayout="row" fxLayoutAlign="end">
+    <div><star-rating
+          [matTooltip]= "funficInfo.scoreCount+' scores : '+funficInfo.rating"
+          [matTooltipPosition]="'above'"
+          [labelText]="'Users score'"
+          [starType]="'svg'"
+          [rating]="funficInfo.rating"
+          [showHalfStars]="true"
+          [readOnly]="true"
+        ></star-rating>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions class="add-info">
+    <button mat-stroked-button color="basic" (click)="showDetailedInfo()">More</button>
+    <div>{{funficInfo.createdAt | date : 'shortDate'}}</div>
+  </mat-card-actions>
+</mat-card>

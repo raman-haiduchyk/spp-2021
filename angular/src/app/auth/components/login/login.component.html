@@ -1,0 +1,21 @@
+<mat-card>
+<form [formGroup]="authForm" autocomplete="off" (ngSubmit)="loginUser()">
+  <h2>Authentication</h2>
+  <mat-form-field>
+    <input matInput placeholder="Login" formControlName="login">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Password" formControlName="password" type='password'>
+  </mat-form-field>
+  <button mat-raised-button [disabled]="authForm.invalid || isLoading" type="submit">Submit</button>
+</form>
+<br>
+  <div class="alert alert-danger" role="alert">
+    {{errorMessage}}
+
+  </div>
+<br>
+<mat-divider></mat-divider>
+<br>
+<button mat-button (click)="onRedirect()" [disabled]="isLoading">Register</button>
+</mat-card>

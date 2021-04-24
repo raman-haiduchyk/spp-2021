@@ -1,0 +1,35 @@
+<mat-card *ngIf="profile">
+  <mat-card-header fxLayoutAlign.gt-xs="center">
+    <img mat-card-avatar mat-card-md-image src='https://material.angular.io/assets/img/examples/shiba1.jpg'>
+    <mat-card-title>{{profile.name}}</mat-card-title>
+  </mat-card-header><br>
+  <mat-card-content fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="40px">
+    <div class="info" fxLayout="column">
+      <h2>Info: </h2>
+      <mat-form-field  appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input matInput type="text" [(ngModel)]="profile.phone">
+      </mat-form-field>
+      <mat-form-field  appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput type="text" [(ngModel)]="profile.firstName">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput type="text" [(ngModel)]="profile.lastName">
+      </mat-form-field>
+      <button mat-stroked-button (click)="onProfileChanges()" [disabled]="isChangeDisabled">Confirm changes</button>
+    </div>
+
+    <div class="funfics">
+      <h2>Works:
+        <button mat-mini-fab (click)="openEditor()" [disabled]="isChangeDisabled"><mat-icon>add</mat-icon></button>
+      </h2>
+      <div class="spiner" *ngIf="!funfics" fxLayout="column" fxLayoutAlign="center center">
+        <mat-spinner></mat-spinner>
+      </div>
+      <app-works-table *ngIf="funfics" [sourceFunfics]="funfics" (delete)="onDelete($event)"></app-works-table>
+    </div>
+
+  </mat-card-content>
+</mat-card>

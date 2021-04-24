@@ -1,0 +1,12 @@
+
+  <div fxLayout="column" class="filter">
+    <button mat-stroked-button color='primary' (click)="changeDateFilterState()">Date{{dateArrowChar}}</button>
+    <button mat-stroked-button color='primary' (click)="changeScoreFilterState()">Rating{{scoreArrowChar}}</button>
+    <button mat-stroked-button color='primary' (click)="changeViewsFilterState()">Score count{{viewsArrowChar}}</button>
+    <mat-form-field class="filter-input" appearance="outline">
+      <mat-label>Name, description, genre</mat-label>
+      <input matInput id="filter-word-input" autocomplete="off" >
+    </mat-form-field>
+  </div>
+
+

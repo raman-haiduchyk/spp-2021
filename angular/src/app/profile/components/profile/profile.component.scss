@@ -1,0 +1,34 @@
+.info {
+  min-width: 250px;
+}
+
+.funfics{
+  width: 100%
+}
+
+::ng-deep.mat-card-header-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.spinner{
+  width: 100%;
+}
+
+.mat-card-header .mat-card-title {
+  margin-bottom: 16px;
+}
+
+.mat-card-title {
+  font-size: 28px;
+}
+
+.mat-card-subtitle {
+  font-size: 22px;
+}
+
+.mat-mini-fab {
+  margin-left: 20px;
+}

@@ -1,0 +1,22 @@
+
+.nav-container {
+  height: 100%;
+  h2{
+    padding-left: 20px;
+  }
+}
+
+.spinner{
+  width: 100%;
+  height: 100%;
+}
+
+.content { padding: 0 20px;}
+
+.toggle-button {
+  width: 100%;
+  background-color: white;
+  z-index: 5;
+  position: sticky;
+  top: -1px;
+}

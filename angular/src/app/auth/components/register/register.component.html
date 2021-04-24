@@ -1,0 +1,25 @@
+<mat-card>
+  <form [formGroup]="registerForm" autocomplete="off" (ngSubmit)="registerUser()">
+    <h2>Registrarion</h2>
+    <mat-form-field>
+      <input matInput placeholder="Name" formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Password" formControlName="password" type='password'>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type='password'>
+    </mat-form-field>
+    <button type="submit" mat-raised-button [disabled]="registerForm.invalid || isLoading" >Submit</button>
+  </form>
+  <br>
+  <div class="alert alert-danger" role="alert">
+    <p *ngFor="let message of errorMessages">{{message}}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <br>
+  <button mat-button (click)="onRedirect()" [disabled]="isLoading">Login</button>
+  </mat-card>
