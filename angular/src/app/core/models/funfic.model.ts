@@ -12,4 +12,5 @@ export interface Funfic {
   updatedAt?: string;
   chapters?: Chapter[];
   userId?: string;
+  __typename?: string;
 }

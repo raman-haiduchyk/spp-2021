@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
-import { from, Observable, of } from 'rxjs';
-import { debounceTime, delay, filter, map, mergeMap, switchMap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import {Apollo, gql} from 'apollo-angular';
+import { DocumentNode } from 'graphql';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Chapter } from '../models/chapter.model';
 import { UserComment } from '../models/comment.model';
 import { CreateResponse } from '../models/create-request';
 import { Funfic } from '../models/funfic.model';
@@ -13,9 +13,23 @@ import { Funfic } from '../models/funfic.model';
 })
 export class RequestService {
 
+  private funficsQuery: DocumentNode =
+  gql`query myquery{
+        funfics{
+          id,
+          name,
+          author,
+          genre,
+          rating,
+          scoreCount,
+          shortDescription,
+          createdAt
+        }
+      }`;
+
   private url: string = environment.urlAddress;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private apollo: Apollo) { }
 
   private createCompleteRoute(route: string, envAddress: string): string {
     return `${envAddress}/${route}`;
@@ -27,6 +41,37 @@ export class RequestService {
 
   public getFunficResponse(route: string): Observable<Funfic[]> {
     return this.http.get<Funfic[]>(this.createCompleteRoute(route, this.url));
+  }
+
+  // tslint:disable-next-line: no-any
+  public getFunficGraphqlResponse(): Observable<any> {
+    return this.apollo.watchQuery<Funfic[]>({query: this.funficsQuery}).valueChanges;
+  }
+
+  // tslint:disable-next-line: no-any
+  public getFunficByIdGraphqlResponse(id: Number): Observable<any> {
+    const  funficbyIdQuery: DocumentNode =
+    gql`query myquery{
+          funfics(id: ${id}){
+            id,
+            name,
+            author,
+            genre,
+            rating,
+            scoreCount,
+            shortDescription,
+            createdAt,
+            updatedAt,
+            userId,
+            chapters{
+              id,
+              name,
+              text,
+              number
+            }
+          }
+        }`;
+    return this.apollo.watchQuery<Funfic[]>({query: funficbyIdQuery}).valueChanges;
   }
 
   public getFunficByIdResponse(route: string, id: number): Observable<Funfic> {

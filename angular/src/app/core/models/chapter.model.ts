@@ -6,4 +6,5 @@ export interface Chapter {
   text: string;
   createdAt?: string;
   updatedAt?: string;
+  __typename?: string;
 }

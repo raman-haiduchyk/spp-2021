@@ -49,23 +49,28 @@ export class ReaderComponent implements OnInit {
 
     this.route.params.subscribe(
       params => {
-        this.requestService.getFunficByIdResponse('funfic', params.id).subscribe(
-          funfic => {
-            this.funfic = funfic;
-            if (this.funfic.chapters.length) {
-              this.funfic.chapters.sort((a, b) => {
-                return a.number - b.number;
-              });
-            }
-            this.isAuthorized = this.authService.isUserAuthenticated() || this.authService.isUserPotentialAuthenticated();
-            this.isOwner = this.authService.isBelongToUser(this.funfic.author);
-            if (this.isAuthorized) {
-              this.requestService.getRatingResponse('profile/rating', funfic.id).subscribe(
-                res => {
-                  this.rating = res.rating;
-                },
-                err => console.log(err)
-              );
+
+        this.requestService.getFunficByIdGraphqlResponse(params.id).subscribe(
+          res => {
+            if (res.data.funfics && res.data.funfics.length > 0) {
+              this.funfic = {...res.data.funfics[0]};
+              this.funfic.chapters = [...this.funfic.chapters];
+              console.log(this.funfic);
+              if (this.funfic.chapters.length) {
+                this.funfic.chapters.sort((a, b) => {
+                  return a.number - b.number;
+                });
+              }
+              this.isAuthorized = this.authService.isUserAuthenticated() || this.authService.isUserPotentialAuthenticated();
+              this.isOwner = this.authService.isBelongToUser(this.funfic.author);
+              if (this.isAuthorized) {
+                this.requestService.getRatingResponse('profile/rating', this.funfic.id).subscribe(
+                  rateRes => {
+                    this.rating = rateRes.rating;
+                  },
+                  err => console.log(err)
+                );
+              }
             }
           },
           err => this.dialog.open(ErrorDialogComponent)

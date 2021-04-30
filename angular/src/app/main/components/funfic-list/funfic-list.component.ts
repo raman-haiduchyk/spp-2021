@@ -53,8 +53,13 @@ export class FunficListComponent implements OnInit {
       this.checkInnerWidth();
     };
 
-    this.requestService.getFunficResponse('funfic').subscribe(
-      res => this.funfics = res,
+    // this.requestService.getFunficResponse('funfic').subscribe(
+    //   res => this.funfics = res,
+    //   err => this.dialog.open(ErrorDialogComponent)
+    // );
+
+    this.requestService.getFunficGraphqlResponse().subscribe(
+      res => this.funfics = res.data.funfics,
       err => this.dialog.open(ErrorDialogComponent)
     );
   }

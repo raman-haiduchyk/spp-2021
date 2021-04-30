@@ -4,6 +4,8 @@ const favicon = require('serve-favicon')
 const path = require('path');
 const logger = require('morgan');
 const cors = require('cors');
+const { graphqlHTTP } = require('express-graphql');
+const schema = require('./graphql/schema');
 
 
 const cookieParser = require('cookie-parser');
@@ -49,6 +51,13 @@ app.use('/profile', authenticateToken, profileRouter);
 app.use('/edit', authenticateToken, editRouter);
 app.use('/auth', authRouter);
 app.use('/funfic', indexRouter);
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema: schema,
+    graphiql: true,
+  }),
+);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

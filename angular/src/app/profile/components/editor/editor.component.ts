@@ -56,6 +56,29 @@ export class EditorComponent implements OnInit {
 
     this.route.params.subscribe(
       params => {
+
+        this.requestService.getFunficByIdGraphqlResponse(params.id).subscribe(
+          res => {
+            if (res.data.funfics && res.data.funfics.length > 0) {
+              this.funfic = {...res.data.funfics[0]};
+              this.funfic.chapters = [...this.funfic.chapters];
+              console.log(this.funfic);
+              if (this.funfic.chapters.length) {
+                this.funfic.chapters.sort((a, b) => {
+                  return a.number - b.number;
+                });
+              }
+
+              if (!this.authService.isBelongToUser(this.funfic.author)) {
+                // tslint:disable-next-line: typedef
+                const dialogRef = this.dialog.open(ErrorDialogComponent);
+                dialogRef.afterClosed().subscribe(_ => this.router.navigate(['profile']));
+              }
+            }
+          },
+          err => this.dialog.open(ErrorDialogComponent)
+        );
+
         this.requestService.getFunficByIdResponse('funfic', params.id).subscribe(
           funficRes => {
             this.funfic = funficRes;

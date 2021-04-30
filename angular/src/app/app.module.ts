@@ -7,6 +7,9 @@ import { CoreModule } from './core/core.module';
 import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import {APOLLO_OPTIONS} from 'apollo-angular';
+import {HttpLink} from 'apollo-angular/http';
+import {InMemoryCache} from '@apollo/client/core';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,20 @@ import { HttpClientModule } from '@angular/common/http';
     }),
     CoreModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: `${environment.urlAddress}/graphql`,
+          }),
+        };
+      },
+      deps: [HttpLink],
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
