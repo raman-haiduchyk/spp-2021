@@ -136,11 +136,13 @@ router.put('/comments/:id', async(req, res) => {
 
     if(!comment) return res.sendStatus(500);
 
-    return res.status(200).send({
+    const mappedComment = {
         author: user.name,
         text: comment.text,
         createdAt: comment.createdAt
-    });
+    };
+
+    return res.status(200).send(mappedComment);
 
 });
 

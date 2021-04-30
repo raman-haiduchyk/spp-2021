@@ -8,8 +8,9 @@ const app = require('../app');
 const debug = require('debug')('myapp:server');
 const http = require('http');
 const dbconnection = require('../models/initModels');
-
-
+const { Socket } = require('socket.io');
+const Comment = dbconnection.FunficComments;
+const User = dbconnection.User;
 const port = 3000;
 
 /**
@@ -17,6 +18,41 @@ const port = 3000;
  */
 
 var server = http.createServer(app);
+
+const io = require("socket.io")(server, {
+  path: '/getcomments',
+  cors: {
+    origin: 'http://localhost:4200',
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
+  }
+});
+
+io.on("connection", (socket) => {
+
+  socket.on('listen', async (newId) => {
+
+    await socket.join(newId.toString());
+
+    let comments = await Comment.findAll({
+      where: { funficId: newId },
+      include: User
+    });
+
+    if (!comments) socket.emit('get', []);
+
+    let mappedComments = comments.map(comment => {
+        return {author: comment.user.name, text: comment.text, createdAt: comment.createdAt}
+    });
+
+    socket.emit('get', mappedComments);
+
+    socket.on('new', (comment) => {
+      io.to(newId.toString()).emit('add', comment)
+    });
+  });
+});
+
+
 server.on('error', onError);
 server.on('listening', onListening);
 

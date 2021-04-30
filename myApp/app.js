@@ -12,7 +12,6 @@ const session = require('cookie-session');
 const indexRouter = require('./routes/index');
 const profileRouter = require('./routes/profile');
 const authRouter = require('./routes/auth');
-const commentRouter = require('./routes/comments');
 const editRouter = require('./routes/editor');
 
 const jwtHandler = require('./public/tokenHandler');
@@ -49,7 +48,6 @@ app.use(ignoreFavicon);
 app.use('/profile', authenticateToken, profileRouter);
 app.use('/edit', authenticateToken, editRouter);
 app.use('/auth', authRouter);
-app.use('/comments', commentRouter);
 app.use('/funfic', indexRouter);
 
 // catch 404 and forward to error handler
